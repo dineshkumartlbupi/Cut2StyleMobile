@@ -1,43 +1,51 @@
 class UserModel {
-  final String role;
+  final int id;
   final String name;
-  final String dob;
-  final String address;
-  final String gender;
   final String email;
-  final String password;
-  final String password_confirmation;
+  final String? emailVerifiedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String role;
+  final String gender;
+  final DateTime dob;
+  final String address;
 
   UserModel({
-    required this.role,
+    required this.id,
     required this.name,
+    required this.email,
+    this.emailVerifiedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.role,
+    required this.gender,
     required this.dob,
     required this.address,
-    required this.gender,
-    required this.email,
-    required this.password,
-    required this.password_confirmation,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        role: json['role'],
+        id: json['id'],
         name: json['name'],
-        dob: json['dob'],
-        address: json['address'],
-        gender: json['gender'],
         email: json['email'],
-        password: json['password'],
-        password_confirmation: json['password_confirmation'],
+        emailVerifiedAt: json['email_verified_at'],
+        createdAt: DateTime.parse(json['created_at']),
+        updatedAt: DateTime.parse(json['updated_at']),
+        role: json['role'],
+        gender: json['gender'],
+        dob: DateTime.parse(json['dob']),
+        address: json['address'],
       );
 
   Map<String, dynamic> toJson() => {
-        'role': role,
+        'id': id,
         'name': name,
-        'dob': dob,
-        'address': address,
-        'gender': gender,
         'email': email,
-        'password': password,
-        'password_confirmation': password_confirmation,
+        'email_verified_at': emailVerifiedAt,
+        'created_at': createdAt.toIso8601String(),
+        'updated_at': updatedAt.toIso8601String(),
+        'role': role,
+        'gender': gender,
+        'dob': dob.toIso8601String(),
+        'address': address,
       };
 }

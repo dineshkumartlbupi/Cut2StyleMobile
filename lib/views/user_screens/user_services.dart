@@ -7,14 +7,13 @@ import 'package:cut2style/widgets/ProfessionalCard.dart';
 import 'package:cut2style/widgets/ProductCard.dart';
 import 'package:cut2style/widgets/custom_appbar.dart';
 import 'package:cut2style/widgets/CategoryCard.dart';
-import 'package:cut2style/widgets/service_category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-class UserHomeScreen extends StatelessWidget {
-  UserHomeScreen({super.key});
+class UserServices extends StatelessWidget {
+  UserServices({super.key});
   final List<Map<String, dynamic>> productCategories = [
     {
       'title': 'Hair Care',

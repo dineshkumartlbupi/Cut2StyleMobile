@@ -24,8 +24,11 @@ class LoginScreen extends StatelessWidget {
             children: [
               Align(
                   alignment: Alignment.bottomLeft,
-                  child:
-                      Icon(Icons.handyman, size: 80, color: AppColors.primary)),
+                  child: Image.asset(
+                    "assets/images/logos.png",
+                    height: 100,
+                    width: 352,
+                  )),
               const SizedBox(height: 20),
               Text("Welcome Back ",
                   style: theme.textTheme.headlineMedium?.copyWith(
@@ -35,18 +38,20 @@ class LoginScreen extends StatelessWidget {
               Text("Login to continue using BeePro Services",
                   style: theme.textTheme.bodyLarge),
               const SizedBox(height: 40),
-              CustomTextField(
-                label: 'Email',
-                controller: controller.emailController,
-                onChanged: (val) => controller.email.value = val,
-              ),
+              Obx(() => CustomTextField(
+                    label: AppStrings.email,
+                    controller: controller.emailController,
+                    onChanged: (val) => controller.email.value = val,
+                    errorText: controller.emailError.value,
+                  )),
               const SizedBox(height: 20),
-              CustomTextField(
-                label: 'Password',
-                controller: controller.passwordController,
-                isPassword: true,
-                onChanged: (val) => controller.password.value = val,
-              ),
+              Obx(() => CustomTextField(
+                    label: AppStrings.password,
+                    controller: controller.passwordController,
+                    isPassword: true,
+                    onChanged: (val) => controller.password.value = val,
+                    errorText: controller.emailError.value,
+                  )),
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(

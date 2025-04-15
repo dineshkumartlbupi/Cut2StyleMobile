@@ -1,5 +1,8 @@
 import 'package:cut2style/app/routes/app_routes.dart';
 import 'package:cut2style/core/constants/strings.dart';
+import 'package:cut2style/core/error/snackbar_util.dart';
+import 'package:cut2style/core/utils/field_validator.dart';
+import 'package:cut2style/core/utils/loader_util.dart';
 import 'package:cut2style/services/AuthServicelocal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -20,50 +23,125 @@ class AuthController extends GetxController {
   final email = ''.obs;
   final dob = ''.obs;
   final name = ''.obs;
-  final address = ''.obs;
+  final address = 'Your address'.obs;
   final gender = ''.obs;
   final password = ''.obs;
   final cnfPassword = ''.obs;
 
+  // Error fields
+  var roleError = RxnString();
+  var nameError = RxnString();
+  var dobError = RxnString();
+  var emailError = RxnString();
+  var passwordError = RxnString();
+  var cnfPasswordError = RxnString();
+  var genderError = RxnString();
+
+  // Validation wrapper methods
+  void validateUserType(String val) {
+    role.value = val;
+    roleError.value = FieldValidator.validateUserType(val);
+  }
+
+  void validateName(String val) {
+    name.value = val;
+    nameError.value = FieldValidator.validateName(val);
+  }
+
+  void validateDOB(String val) {
+    dob.value = val;
+    dobError.value = FieldValidator.validateDOB(val);
+  }
+
+  void validateEmail(String val) {
+    email.value = val;
+    emailError.value = FieldValidator.validateEmail(val);
+  }
+
+  void validatePassword(String val) {
+    password.value = val;
+    passwordError.value = FieldValidator.validatePassword(val);
+    validateConfirmPassword(cnfPassword.value);
+  }
+
+  void validateConfirmPassword(String val) {
+    cnfPassword.value = val;
+    cnfPasswordError.value =
+        FieldValidator.validateConfirmPassword(password.value, val);
+  }
+
+  void validateGender(String? val) {
+    gender.value = val ?? '';
+    genderError.value = FieldValidator.validateGender(val);
+  }
+
+  bool isFormValid() {
+    validateUserType(role.value);
+    validateName(name.value);
+    validateDOB(dob.value);
+    validateEmail(email.value);
+    validatePassword(password.value);
+    validateConfirmPassword(cnfPassword.value);
+    validateGender(gender.value);
+    return [
+      nameError.value,
+      dobError.value,
+      emailError.value,
+      passwordError.value,
+      cnfPasswordError.value,
+      genderError.value,
+    ].every((e) => e == null);
+  }
+
+  bool isLoginFormValid() {
+    validateEmail(email.value);
+    validatePassword(password.value);
+    return [
+      emailError.value,
+      passwordError.value,
+    ].every((e) => e == null);
+  }
+
   Future<void> login() async {
+    if (!isLoginFormValid()) return;
+    LoaderUtil.showLoading("Logging in...");
     final success = await AuthService.to.login(email.value, password.value);
+    LoaderUtil.hideLoading();
     if (success) {
       final role = AuthService.to.currentUser.value?.role;
-      print(role);
-      // Save login status in secure storage
-      await storage.write(key: 'auth_token', value: "local_mock_token");
       if (role == AppStrings.user) {
         Get.offAllNamed(AppRoutes.userDashboard);
       } else if (role == AppStrings.vender) {
         Get.offAllNamed(AppRoutes.proDashboard);
       }
     } else {
-      Get.snackbar("Login Failed", "Invalid email or password");
+      SnackbarUtil.showError("Invalid email or password");
     }
   }
 
   Future<void> register() async {
-    if (email.value.isEmpty || password.value.isEmpty) {
-      Get.snackbar("Error", "Email and password cannot be empty");
-      return;
-    }
-
+    if (!isFormValid()) return;
+    LoaderUtil.showLoading("Loding please wait...");
     final success = await AuthService.to.register(
         role.value,
         name.value,
         gender.value,
         dob.value,
-        address.value,
+        address.value ?? "",
         email.value,
         password.value,
         cnfPassword.value);
+    LoaderUtil.hideLoading();
+
     if (success) {
-      Get.snackbar("Success", "Registered Successfully. Please log in.");
+      LoaderUtil.hideLoading();
+      SnackbarUtil.showSuccess("Registered Successfully. Please log in.");
       // Optional: Save user role securely
       await storage.write(key: 'auth_token', value: "local_mock_token");
       Get.offNamed(AppRoutes.login);
     } else {
-      Get.snackbar("Error", "Registration failed");
+      LoaderUtil.hideLoading();
+      SnackbarUtil.showError("Registration failed");
     }
   }
 

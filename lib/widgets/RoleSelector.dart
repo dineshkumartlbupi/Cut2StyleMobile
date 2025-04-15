@@ -6,50 +6,71 @@ class RoleSelector extends StatelessWidget {
   final String selected;
   final List<String> options;
   final void Function(String) onChanged;
+  final String? errorText; // 🔹 New parameter
 
   const RoleSelector({
     super.key,
     required this.selected,
     required this.options,
     required this.onChanged,
+    this.errorText, // 🔹 Accept error text
   });
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: options.map((role) {
-        final isSelected = selected == role;
-        return GestureDetector(
-          onTap: () => onChanged(role),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-            decoration: BoxDecoration(
-              color: isSelected ? AppColors.primary : Colors.grey.shade100,
-              border: Border.all(
-                color: isSelected ? AppColors.primary : Colors.grey.shade300,
-                width: 1.5,
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                if (isSelected)
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.2),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start, // 🔹 Align error to left
+      children: [
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: options.map((role) {
+            final isSelected = selected == role;
+            return GestureDetector(
+              onTap: () => onChanged(role),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.primary : Colors.grey.shade100,
+                  border: Border.all(
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.primary.withOpacity(0.2),
+                    width: 1.5,
                   ),
-              ],
-            ),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    if (isSelected)
+                      BoxShadow(
+                        color: AppColors.primary.withOpacity(0.2),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                  ],
+                ),
+                child: Text(
+                  _capitalize(role),
+                  style: isSelected
+                      ? AppTextStyle.button
+                      : AppTextStyle.body.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+        if (errorText != null && errorText!.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 4, left: 8),
             child: Text(
-              _capitalize(role),
-              style: isSelected
-                  ? AppTextStyle.button
-                  : AppTextStyle.body.copyWith(fontWeight: FontWeight.w600),
+              errorText!,
+              style: TextStyle(
+                color: Colors.red[700],
+                fontSize: 12,
+              ),
             ),
           ),
-        );
-      }).toList(),
+      ],
     );
   }
 

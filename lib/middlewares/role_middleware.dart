@@ -10,6 +10,7 @@ class RoleMiddleware extends GetMiddleware {
   RouteSettings? redirect(String? route) {
     final user = AuthService.to.currentUser.value;
     final isLoggedIn = AuthService.to.isLoggedIn.value;
+
     print(" hii ${user?.role.toString()} && isLoggedIn $isLoggedIn");
     if (!isLoggedIn || user == null) {
       return const RouteSettings(name: AppRoutes.login);

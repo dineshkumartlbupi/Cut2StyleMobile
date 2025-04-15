@@ -1,6 +1,6 @@
+import 'package:cut2style/core/error/snackbar_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ErrorHandler {
   static BuildContext? _context;
@@ -50,6 +50,6 @@ class ErrorHandler {
   }
 
   static void showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    SnackbarUtil.showError(message);
   }
 }

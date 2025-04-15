@@ -44,6 +44,7 @@ class RegisterScreen extends StatelessWidget {
                   selected: controller.role.value,
                   options: [AppStrings.user, AppStrings.vender],
                   onChanged: (val) => controller.role.value = val,
+                  errorText: controller.roleError.value,
                 ),
                 const SizedBox(height: 20),
                 Container(
@@ -57,6 +58,7 @@ class RegisterScreen extends StatelessWidget {
                   label: AppStrings.name,
                   controller: controller.nameController,
                   onChanged: (val) => controller.name.value = val,
+                  errorText: controller.nameError.value,
                 ),
                 const SizedBox(height: 16),
                 AppDropdown(
@@ -65,18 +67,21 @@ class RegisterScreen extends StatelessWidget {
                   options: [AppStrings.male, AppStrings.female],
                   onChanged: (val) => controller.gender.value = val ?? 'male',
                   labelText: 'Gender',
+                  errorText: controller.genderError.value,
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
                   label: AppStrings.dob,
                   controller: controller.dobController,
                   onChanged: (val) => controller.dob.value = val,
+                  errorText: controller.dobError.value,
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
                   label: AppStrings.email,
                   controller: controller.emailController,
                   onChanged: (val) => controller.email.value = val,
+                  errorText: controller.emailError.value,
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
@@ -84,6 +89,7 @@ class RegisterScreen extends StatelessWidget {
                   isPassword: true,
                   controller: controller.passwordController,
                   onChanged: (val) => controller.password.value = val,
+                  errorText: controller.passwordError.value,
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
@@ -91,6 +97,7 @@ class RegisterScreen extends StatelessWidget {
                   isPassword: true,
                   controller: controller.cnfpasswordController,
                   onChanged: (val) => controller.cnfPassword.value = val,
+                  errorText: controller.cnfPasswordError.value,
                 ),
                 const SizedBox(height: 30),
                 CustomButton(

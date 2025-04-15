@@ -6,6 +6,14 @@ import 'package:cut2style/views/auth/register_screen.dart';
 import 'package:cut2style/views/dashboard/pro_dashboard.dart';
 import 'package:cut2style/views/dashboard/user_dashboard.dart';
 import 'package:cut2style/views/splash_screen.dart';
+import 'package:cut2style/views/user_screens/ThemeSwitchWidget.dart';
+import 'package:cut2style/views/user_screens/address/SavedAddressesScreen.dart';
+import 'package:cut2style/views/user_screens/editprofile/EditProfileScreen.dart';
+import 'package:cut2style/views/user_screens/orders/OrderHistoryScreen.dart';
+import 'package:cut2style/views/user_screens/payment/PaymentMethodScreen.dart';
+import 'package:cut2style/views/user_screens/refferals/QRReferralScreen.dart';
+import 'package:cut2style/views/user_screens/user_support/user_support.dart';
+import 'package:cut2style/views/user_screens/wishlist/WishlistScreen.dart';
 import 'package:get/get.dart';
 import '../routes/app_routes.dart';
 
@@ -39,6 +47,39 @@ class AppPages {
     GetPage(
       name: AppRoutes.forgotPassword,
       page: () => ForgotPasswordScreen(), // Replace with ForgotPasswordScreen
+    ),
+
+    GetPage(
+      name: AppRoutes.editProfile,
+      page: () => EditProfileScreen(), // Replace with ForgotPasswordScreen
+    ),
+    GetPage(
+      name: AppRoutes.orderHistory,
+      page: () => OrderHistoryScreen(), // Replace with ForgotPasswordScreen
+    ),
+    GetPage(
+      name: AppRoutes.wishlist,
+      page: () => WishlistScreen(), // Replace with ForgotPasswordScreen
+    ),
+    GetPage(
+      name: AppRoutes.savedAddresses,
+      page: () => SavedAddressesScreen(), // Replace with ForgotPasswordScreen
+    ),
+    GetPage(
+      name: AppRoutes.themeSettings,
+      page: () => ThemeSwitchWidget(), // Replace with ForgotPasswordScreen
+    ),
+    GetPage(
+      name: AppRoutes.supportCenter,
+      page: () => SupportScreen(), // Replace with ForgotPasswordScreen
+    ),
+    GetPage(
+      name: AppRoutes.referralCode,
+      page: () => QRReferralScreen(), // Replace with ForgotPasswordScreen
+    ),
+    GetPage(
+      name: AppRoutes.paymentMethods,
+      page: () => PaymentMethodScreen(), // Replace with ForgotPasswordScreen
     ),
   ];
 }

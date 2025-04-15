@@ -1,11 +1,9 @@
-// ====================
-// UserDashboard.dart
-// ====================
 import 'package:cut2style/services/AuthServicelocal.dart';
 import 'package:cut2style/views/user_screens/user_home.dart';
-import 'package:cut2style/views/user_screens/user_order.dart';
+import 'package:cut2style/views/user_screens/user_bookings.dart';
 import 'package:cut2style/views/user_screens/user_profile.dart';
-import 'package:cut2style/views/user_screens/user_rewards.dart';
+import 'package:cut2style/views/user_screens/user_favorites.dart';
+import 'package:cut2style/views/user_screens/user_services.dart';
 import 'package:cut2style/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
@@ -21,10 +19,10 @@ class _UserDashboardState extends State<UserDashboard> {
   final userModel = AuthService.to.currentUser.value;
   final List<Widget> _screens = [
     UserHomeScreen(),
-    const UserOrdersScreen(),
-    const UserRewardsScreen(),
-    const UserProfileScreen(),
-    const UserProfileScreen(),
+    UserServices(),
+    UserBookings(),
+    UserFavorites(),
+    UserProfileScreen(),
   ];
 
   @override
