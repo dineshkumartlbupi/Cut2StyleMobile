@@ -41,7 +41,7 @@ class _ProfessionalDashboardState extends State<ProfessionalDashboard> {
             hasNotifications: true,
             badgeCount: 0, // Example badge count
             usersData: userModel,
-            title: '', // Profile picture URL
+            title: '', // Profile pictureaddf URL
           )),
       body: _screens[_currentIndex],
       bottomNavigationBar: CustomBottomNav(
