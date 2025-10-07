@@ -17,18 +17,19 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => CartProvider()),
     ],
-    child: const MyApp(), // Replace with your main app widget
+    child: MyApp(), // Replace with your main app widget
   ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  // final ThemeController themeController = Get.put(ThemeController());
   @override
   void initState() {
     super.initState();
@@ -39,6 +40,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: appTheme,
+      // themeMode:
+      //     themeController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.initial,
       getPages: AppPages.routes,

@@ -1,14 +1,14 @@
 import 'dart:convert';
+import 'package:cut2style/controllers/auth_controller.dart';
 import 'package:cut2style/core/constants/api_end_points.dart';
 import 'package:cut2style/data/local/local_storage_service.dart';
 import 'package:cut2style/data/local/secure_storage_service.dart';
 import 'package:cut2style/models/UserModel.dart';
 import 'package:cut2style/services/api_service.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService extends GetxService {
+  AuthController controller = AuthController();
   static AuthService get to => Get.find();
   final _secureStorage = SecureStorageService();
   final _localStorageService = LocalStorageService();
@@ -126,12 +126,52 @@ class AuthService extends GetxService {
     currentUser.value = null;
     isLoggedIn.value = false;
   }
-}
 
-// Work Report 15/04/2025
-// 1.Add Product API
-// 2.Edit Product API
-// 3.Delete Product by product id  API
-// 4.Get All Product List API
-// 5.Get Published by me products List API
-// 6.Get Product By Product ID  API
+  /// Register and store user locally
+  Future<bool> updateProfile(
+    String name,
+    String gender,
+    String dob,
+    String address,
+    String email,
+  ) async {
+    try {
+      final body = {
+        "name": name,
+        "gender": gender,
+        "dob": dob,
+        "address": address,
+        "email": email,
+      };
+
+      print("Register RequestBody: $body");
+
+      final res = await ApiService.post(ApiEndpoints.updateProfile, body);
+
+      if (res != null) {
+        print("✅ UPdate profile RESPONSE DATA: ${res.data}");
+
+        if (res.statusCode == 200) {
+          // Save token
+          await _localStorageService.setString(
+              'user_data', jsonEncode(currentUser.value?.toJson()));
+          await ApiService.setup();
+          currentUser.value = UserModel.fromJson(res.data['user']);
+          isLoggedIn.value = true;
+
+          print("Update  profile: ${currentUser.value?.name}");
+          return true;
+        } else {
+          print("update profile failed: Token not found or invalid response.");
+        }
+      } else {
+        print("API response is null.");
+      }
+    } catch (e, stackTrace) {
+      print("Exception in register(): $e");
+      print("StackTrace: $stackTrace");
+    }
+
+    return false;
+  }
+}

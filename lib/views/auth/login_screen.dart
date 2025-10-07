@@ -1,6 +1,5 @@
 import 'package:cut2style/app/routes/app_routes.dart';
 import 'package:cut2style/controllers/auth_controller.dart';
-import 'package:cut2style/core/constants/colors.dart';
 import 'package:cut2style/core/constants/strings.dart';
 import 'package:cut2style/widgets/custom_button.dart';
 import 'package:cut2style/widgets/custom_text_field.dart';

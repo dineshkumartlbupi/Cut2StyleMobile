@@ -6,6 +6,7 @@ class AppStrings {
   static const login = 'Login';
   static const logout = 'Logout';
   static const signup = 'Sign Up';
+  static const updateProfile = 'Update Profile';
   static const name = 'Name';
   static const dob = 'D.O.B (DD/MM/YYYY)';
   static const email = 'Email';

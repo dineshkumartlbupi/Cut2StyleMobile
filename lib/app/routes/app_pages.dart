@@ -6,7 +6,7 @@ import 'package:cut2style/views/auth/register_screen.dart';
 import 'package:cut2style/views/dashboard/pro_dashboard.dart';
 import 'package:cut2style/views/dashboard/user_dashboard.dart';
 import 'package:cut2style/views/splash_screen.dart';
-import 'package:cut2style/views/user_screens/ThemeSwitchWidget.dart';
+import 'package:cut2style/widgets/ThemeSwitchWidget.dart';
 import 'package:cut2style/views/user_screens/address/SavedAddressesScreen.dart';
 import 'package:cut2style/views/user_screens/editprofile/EditProfileScreen.dart';
 import 'package:cut2style/views/user_screens/orders/OrderHistoryScreen.dart';

@@ -34,6 +34,29 @@ class ApiService {
 
   static Future<Response?> post(String endpoint, dynamic data) async {
     try {
+      final token = await _storage.read(key: 'auth_token'); // Fetch token
+      return await dio.post(
+        endpoint,
+        data: data,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            if (token != null) "Authorization": "Bearer $token",
+          },
+        ),
+      );
+    } on DioException catch (e) {
+      _handleDioError(e);
+      return null;
+    } catch (e) {
+      _handleGenericError(e);
+      return null;
+    }
+  }
+
+  static Future<Response?> postWithBearerToken(
+      String endpoint, dynamic data) async {
+    try {
       return await dio.post(
         endpoint,
         data: data,

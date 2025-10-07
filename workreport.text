@@ -1,0 +1,17 @@
+
+// Work Report 15/04/2025
+// 1.Add Product API
+// 2.Edit Product API
+// 3.Delete Product by product id  API
+// 4.Get All Product List API
+// 5.Get Published by me products List API
+// 6.Get Product By Product ID  API
+
+
+// Work Report 16/04/2025
+// 1.Create Structure for Admin dashbord ,Vender dashboard ,User dashboard
+// 2.Create Functionlity for Product and show all Products 
+// 3.Create Functionlity for Users and show all users to admin
+// 4.Create FUnctionlity for venders and show all venders to admin
+// 5.Create controllers for the functionlities 
+// 6.Design Profile screen and show profile data 

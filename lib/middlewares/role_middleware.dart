@@ -22,3 +22,4 @@ class RoleMiddleware extends GetMiddleware {
     return null;
   }
 }
+

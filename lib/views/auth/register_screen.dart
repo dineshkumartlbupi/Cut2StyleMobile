@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:cut2style/app/routes/app_routes.dart';
 import 'package:cut2style/app/themes/app_text_styles.dart';
@@ -11,7 +10,6 @@ import 'package:cut2style/widgets/custom_button.dart';
 import 'package:cut2style/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatelessWidget {
   final controller = Get.put(AuthController());

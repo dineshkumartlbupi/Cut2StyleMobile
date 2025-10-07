@@ -3,6 +3,7 @@ import 'package:cut2style/core/constants/strings.dart';
 import 'package:cut2style/core/error/snackbar_util.dart';
 import 'package:cut2style/core/utils/field_validator.dart';
 import 'package:cut2style/core/utils/loader_util.dart';
+import 'package:cut2style/models/UserModel.dart';
 import 'package:cut2style/services/AuthServicelocal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -36,6 +37,18 @@ class AuthController extends GetxController {
   var passwordError = RxnString();
   var cnfPasswordError = RxnString();
   var genderError = RxnString();
+
+  void loadUserProfile() {
+    final profile = AuthService.to.currentUser.value;
+    name.value = profile!.name;
+    gender.value = profile.gender;
+    dob.value = profile.dob.toString();
+    email.value = profile.email;
+
+    nameController.text = profile.name;
+    dobController.text = profile.dob.toString();
+    emailController.text = profile.email;
+  }
 
   // Validation wrapper methods
   void validateUserType(String val) {
@@ -102,6 +115,19 @@ class AuthController extends GetxController {
     ].every((e) => e == null);
   }
 
+  bool isFormUpdateData() {
+    validateName(name.value);
+    validateDOB(dob.value);
+    validateEmail(email.value);
+    validateGender(gender.value);
+    return [
+      nameError.value,
+      dobError.value,
+      emailError.value,
+      genderError.value,
+    ].every((e) => e == null);
+  }
+
   Future<void> login() async {
     if (!isLoginFormValid()) return;
     LoaderUtil.showLoading("Logging in...");
@@ -150,6 +176,22 @@ class AuthController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('user_data');
     Get.offAllNamed(AppRoutes.login);
+  }
+
+  Future<void> updateProfile() async {
+    if (!isFormUpdateData()) return;
+    LoaderUtil.showLoading("Loding please wait...");
+    final success = await AuthService.to.updateProfile(
+        name.value, gender.value, dob.value, address.value ?? "", email.value);
+    LoaderUtil.hideLoading();
+
+    if (success) {
+      LoaderUtil.hideLoading();
+      SnackbarUtil.showSuccess("Profile update successfully");
+    } else {
+      LoaderUtil.hideLoading();
+      SnackbarUtil.showError("Profile update failed");
+    }
   }
 
   @override

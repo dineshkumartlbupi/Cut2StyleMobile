@@ -1,4 +1,6 @@
 import 'package:cut2style/core/constants/colors.dart';
+import 'package:cut2style/core/constants/strings.dart';
+import 'package:cut2style/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cut2style/app/routes/app_routes.dart';
@@ -131,25 +133,15 @@ class UserProfileScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-
-            // Logout Button with a red accent
-            ElevatedButton.icon(
+            CustomButton(
               icon: const Icon(Icons.logout),
-              label: const Text("Logout"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
+              text: AppStrings.logout,
               onPressed: () {
                 AuthService.to.logout();
                 Get.offAllNamed(AppRoutes.login);
               },
             ),
+            // Logout Button with a red accent
           ],
         ),
       ),
